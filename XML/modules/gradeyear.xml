@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="gradeyear" to-string-ts="gradeyear.code + '-' + gradeyear.year" to-string-java="gradeyear.getCode() + #quat; #quat; + gradeyear.getYear()">
+    <code length="10" prefix="GY" searchable="yes" exist-on-table="yes"/>
+
+    <varchar-property name="year" label="Year" example="" required="yes" exist-on-table="yes"/>
+
+    <date-property name="dostart" label="Start Date" example="" required="yes" exist-on-table="yes"/>
+    <date-property name="doend" label="End Date" example="" required="yes" exist-on-table="yes"/>
+
+    <decimal-property name="totalfee" label="Total Fee" example="" precision="10" scale="2" min="0" max="99999999"/>
+
+
+    <reference-property basic="yes" required="yes" name="grade" label="Grade" referenced-from="grade" service-method="getAll" to-string-java="grade.getName()" to-string-ts="grade.name"/>
+    <reference-property basic="yes" required="yes" name="gradeyearstatus" label="Grade Year Status" referenced-from="gradeyearstatus" service-method="getAll" to-string-java="gradeyearstatus.getName()" to-string-ts="gradeyearstatus.name"/>
+
+    <sub-module name="yearterm" label="Yar Term Payments" to-string-ts="yearterm.id" to-string-java="yearterm.getId()">
+        <reference-property name="payscheme" label="Pay Scheme" to-string-java="payscheme.getName()" to-string-ts="payscheme.name" service-method="getAll"
+                            referenced-from="payscheme"/>
+        <date-property name="date" label="Date" example="" required="yes"/>
+        <decimal-property name="fee" label="Fee" example="" precision="10" scale="2" min="0" max="999999999"/>
+    </sub-module>
+
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

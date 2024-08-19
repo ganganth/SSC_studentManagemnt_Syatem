@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE main SYSTEM "./dtd/main.dtd">
+<main>
+    <database>
+        <name>polymathdb</name>
+        <user>root</user>
+        <password>1234</password>
+        <host>localhost:3306</host>
+    </database>
+    <client>
+        <organization>Polymath College</organization>
+    </client>
+    <usertypes>
+        <usertype
+                module-name="employee"
+                basic-properties="id,code,nametitle,callingname,photo"
+                non-basic-properties="civilstatus,fullname,dobirth,gender,nic,mobile,land,email,address,designation,dorecruit,employeestatus,description"
+                to-string-java="employee.getCode() + #quat;-#quat; + employee.getNametitle().getName() + #quat; #quat; + employee.getCallingname()"
+                to-string-ts="employee.code + '-' + employee.nametitle.name + ' ' + employee.callingname"
+        />
+        <usertype
+                module-name="guardian"
+                basic-properties="id,code,nametitle,callingname"
+                non-basic-properties=""
+                to-string-java="guardian.getCode() + #quat; - #quat; + guardian.getNametitle().getName() + #quat; #quat; + guardian.getCallingname()"
+                to-string-ts="guardian.code + ' - ' + guardian.nametitle.name + ' ' + guardian.callingname"
+        />
+        <usertype
+                module-name="student"
+                basic-properties="id,indx,callingname"
+                non-basic-properties=""
+                to-string-java="student.getIndx() + #quat; - #quat; + student.getCallingname()"
+                to-string-ts="student.Indx + ' - ' + student.callingname"
+        />
+    </usertypes>
+</main>

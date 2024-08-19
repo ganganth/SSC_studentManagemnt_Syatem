@@ -1,0 +1,102 @@
+<div>
+  <div class="grid">
+    <div class="row">
+
+    </div>
+    <h3 class="text-center">Student reports Details.</h3>
+    <div class="row" style="margin-top: 10px;">
+
+      <div class="col-md-4">
+        <mat-card class="example-card" style="height: 500px;">
+          <mat-card-content>
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>Select grade:</mat-label>
+                <mat-select (selectionChange)="getFirstChatData($event.value)">
+                  <mat-option value="1">1</mat-option>
+                  <mat-option value="2">2</mat-option>
+                  <mat-option value="3">3</mat-option>
+                  <mat-option value="4">4</mat-option>
+                  <mat-option value="5">5</mat-option>
+                  <mat-option value="6">6</mat-option>
+                  <mat-option value="7">7</mat-option>
+                  <mat-option value="8">8</mat-option>
+                  <mat-option value="9">9</mat-option>
+                  <mat-option value="10">10</mat-option>
+                  <mat-option value="11">11</mat-option>
+                  <mat-option value="12">12</mat-option>
+                  <mat-option value="13">13</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <h3 class="text-center">{{title1}}</h3>
+              <div style="display: block">
+                <canvas id="chart-1"></canvas>
+
+              </div>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-4">
+        <mat-card class="example-card" style="height: 500px;">
+          <mat-card-content>
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>Select grade:</mat-label>
+                <mat-select (selectionChange)="getSecondChatData($event.value)">
+                  <mat-option value="1">1</mat-option>
+                  <mat-option value="2">2</mat-option>
+                  <mat-option value="3">3</mat-option>
+                  <mat-option value="4">4</mat-option>
+                  <mat-option value="5">5</mat-option>
+                  <mat-option value="6">6</mat-option>
+                  <mat-option value="7">7</mat-option>
+                  <mat-option value="8">8</mat-option>
+                  <mat-option value="9">9</mat-option>
+                  <mat-option value="10">10</mat-option>
+                  <mat-option value="11">11</mat-option>
+                  <mat-option value="12">12</mat-option>
+                  <mat-option value="13">13</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <h3 class="text-center">{{title2}}</h3>
+              <div style="display: block">
+                <canvas id="chart-2"></canvas>
+              </div>
+
+
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-4">
+        <mat-card class="example-card" style="height: 500px;">
+          <mat-card-content>
+            <div class="form-group3">
+              <mat-form-field appearance="outline" class="w-60">
+                <mat-label>Select pass Grade:</mat-label>
+                <mat-select (selectionChange)="getThirdChatData($event.value)">
+                  <mat-option value="A">A</mat-option>
+                  <mat-option value="B">B</mat-option>
+                  <mat-option value="C">C</mat-option>
+                  <mat-option value="D">D</mat-option>
+                  <mat-option value="F">F</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <h3 class="text-center">{{title3}}</h3>
+              <div style="display: block">
+                <canvas id="chart-3"></canvas>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>

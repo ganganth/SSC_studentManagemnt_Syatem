@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="enrollment" to-string-ts="enrollment.code" to-string-java="enrollment.getCode()">
+    <code length="10" prefix="EN" searchable="yes" exist-on-table="yes"/>
+
+    <decimal-property name="discountamount" label="Discount Amount" example="" precision="10" scale="2" min="0" max="99999999"/>
+    <decimal-property exist-on-table="yes" required="yes" name="fee" label="Total Fee" example="" precision="10" scale="2" min="0" max="99999999"/>
+    <decimal-property insertable="no" updatable="no" name="balance" label="Balance" example="" precision="10" scale="2" min="0" max="99999999   "/>
+
+    <reference-property basic="yes" required="yes" name="student" label="Student" referenced-from="student" service-method="getAllBasic" to-string-java="student.getCode() + #quat;-#quat; + student.getNametitle.getName() + #quat; #quat; + student.getCallingname()" to-string-ts="student.code + '-' + student.nametitle.name + ' ' + student.callingname"/>
+
+
+    <reference-property required="yes" name="payscheme" label="Pay Scheme" referenced-from="payscheme" service-method="getAll" to-string-java="payscheme.getName()" to-string-ts="payscheme.name"/>
+
+    <reference-property required="yes" name="gradeyear" label="Grade Year" referenced-from="gradeyear" service-method="getAllBasic" to-string-java="gradeyear.getCode() + #quat; #quat; + gradeyear.getYear()" to-string-ts="gradeyear.code + '-' + gradeyear.year"/>
+
+    <reference-property required="yes" name="enrollmentstatus" label="Enrollment Status" referenced-from="enrollmentstatus" service-method="getAll" to-string-java="enrollmentstatus.getName()" to-string-ts="enrollmentstatus.name"/>
+
+    <multiple-reference-property name="enrollmentdiscount" label="Enrollment Discount" to-string-java="discount.getName()" to-string-ts="discount.name" service-method="getAllBasic"
+                                 referenced-from="discount"/>
+
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

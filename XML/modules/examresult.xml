@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="examresult" to-string-ts="examresult.code" to-string-java="examresult.getCode()">
+
+    <code length="10" prefix="ER" searchable="yes" exist-on-table="yes"/>
+
+    <reference-property exist-on-table="yes" name="exam" label="Exam" to-string-java="exam.getName()" to-string-ts="exam.name" service-method="getAllBasic" referenced-from="exam" basic="yes"/>
+
+    <reference-property basic="yes" required="yes" name="student" label="Student" referenced-from="student" service-method="getAllBasic" to-string-java="student.getCode() + #quat;-#quat; + student.getNametitle.getName() + #quat; #quat; + student.getCallingname()" to-string-ts="student.code + '-' + student.nametitle.name + ' ' + student.callingname"/>
+
+    <boolean-property name="isprersent" label="Is Present" exist-on-table="yes" searchable="yes" yes-text="is Present"/>
+
+    <group>
+        <decimal-property width="6" name="marks" label="Marks" example="78" precision="5" scale="2" min="0" max="100" />
+
+        <varchar-property width="6" name="grade" label="Grade" example="A+"/>
+    </group>
+
+    <text-property name="feedback" label="Teacher Feedback" example=""/>
+
+    <text-property name="description" label="Description" example=""/>
+</regular-module>

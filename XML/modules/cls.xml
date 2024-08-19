@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="cls" to-string-ts="cls.code + '-' + cls.name" to-string-java="cls.getCode() + #quat; #quat; + cls.getName()">
+    <code length="10" prefix="C" searchable="yes" exist-on-table="yes"/>
+
+    <varchar-property name="name" label="Subject Name" example="" required="yes" exist-on-table="yes" searchable="yes"/>
+
+    <char-property name="year" label="Year" example="" size="4" exist-on-table="yes" required="yes"/>
+
+    <reference-property required="yes" name="gradeyear" label="Grade Year" referenced-from="gradeyear" service-method="getAllBasic" to-string-java="gradeyear.getCode() + #quat; #quat; + gradeyear.getYear()" to-string-ts="gradeyear.code + '-' + gradeyear.year"/>
+
+    <reference-property searchable="yes" required="yes" name="medium" label="Medium" referenced-from="medium" service-method="getAll" to-string-java="medium.getName()" to-string-ts="medium.name"/>
+
+    <reference-property exist-on-table="yes" searchable="yes" required="yes" name="teacher" label="Homeroom Teacher" to-string-java="teacher.getCode() + #quat;-#quat; + teacher.getNametitle().getName() + #quat; #quat; + teacher.getCallingname()" to-string-ts="teacher.code + '-' + teacher.nametitle.name + ' ' + teacher.callingname" service-method="getAllBasic"
+                        referenced-from="employee"/>
+
+    <reference-property exist-on-table="yes" searchable="yes" required="yes" name="assistantteacher" label="Assistant Teacher" to-string-java="assistantteacher.getCode() + #quat;-#quat; + assistantteacher.getNametitle().getName() + #quat; #quat; + assistantteacher.getCallingname()" to-string-ts="assistantteacher.code + '-' + assistantteacher.nametitle.name + ' ' + assistantteacher.callingname" service-method="getAllBasic"
+                        referenced-from="employee"/>
+
+    <reference-property exist-on-table="yes" searchable="yes" name="monitor" label="Class Monitor" to-string-java="monitor.getCode() + #quat;-#quat; + monitor.getNametitle().getName() + #quat; #quat; + monitor.getCallingname()" to-string-ts="monitor.code + '-' + monitor.nametitle.name + ' ' + monitor.callingname" service-method="getAllBasic"
+                        referenced-from="student"/>
+
+    <reference-property exist-on-table="yes" searchable="yes" name="vicemonitor" label="Class Vice Monitor" to-string-java="vicemonitor.getCode() + #quat;-#quat; + vicemonitor.getNametitle().getName() + #quat; #quat; + vicemonitor.getCallingname()" to-string-ts="vicemonitor.code + '-' + vicemonitor.nametitle.name + ' ' + vicemonitor.callingname" service-method="getAllBasic"
+                        referenced-from="student"/>
+
+    <multiple-reference-property name="clsstudent" label="Class Students" to-string-java="clsstudent.getCode() + #quat;-#quat; + clsstudent.getNametitle().getName() + #quat; #quat; + clsstudent.getCallingname()" to-string-ts="clsstudent.code + '-' + clsstudent.nametitle.name + ' ' + clsstudent.callingname" service-method="getAllBasic"
+                                 referenced-from="student"/>
+    
+    <sub-module name="clssubject" label="Class Subject" to-string-ts="clssubject.id" to-string-java="clssubject.getId()">
+        <reference-property required="yes" name="subject" label="Subject" referenced-from="subject" service-method="getAllBasic" to-string-java="subject.getCode() + #quat; #quat; + subject.getName()" to-string-ts="subject.code + '-' + subject.name"/>
+        <reference-property exist-on-table="yes" searchable="yes" required="yes" name="teacher" label="Subject Teacher" to-string-java="teacher.getCode() + #quat;-#quat; + teacher.getNametitle().getName() + #quat; #quat; + teacher.getCallingname()" to-string-ts="teacher.code + '-' + teacher.nametitle.name + ' ' + teacher.callingname" service-method="getAllBasic"
+                            referenced-from="employee"/>
+    </sub-module>
+
+    <reference-property required="yes" name="clsstatus" label="Class Status" referenced-from="clsstatus" service-method="getAll" to-string-java="clsstatus.getName()" to-string-ts="clsstatus.name"/>
+
+    <text-property name="description" label="Description" example=""/>
+
+</regular-module>
+
+

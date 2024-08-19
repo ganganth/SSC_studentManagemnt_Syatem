@@ -1,0 +1,158 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change class details"></app-no-privilege>
+<div *ngIf="this.cls && privilege.update">
+  <app-page-header
+    title="Class Change Form of {{ cls.code + '-' + cls.name }}"
+    [breadcrumbSegments]="['Classes', 'Show All Classes', 'Change Details of ' + cls.code + '-' + cls.name]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Subject Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="nameField.invalid">
+              <span *ngIf="nameField.errors.required">Subject Name is required</span>
+              <span *ngIf="nameField.errors.server">{{nameField.errors.server.join(', ')}}</span>
+              <span *ngIf="nameField.errors.minlength">Subject Name should has at least null characters. </span>
+              <span *ngIf="nameField.errors.maxlength">Subject Name can have a maximum of 255 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Year</mat-label>
+            <input matInput formControlName="year" required>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="yearField.invalid">
+              <span *ngIf="yearField.errors.required">Year is required</span>
+              <span *ngIf="yearField.errors.server">{{yearField.errors.server.join(', ')}}</span>
+              <span *ngIf="yearField.errors.minlength">Year should has 4 characters. </span>
+              <span *ngIf="yearField.errors.maxlength">Year should has 4 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Grade Year</mat-label>
+            <mat-select formControlName="gradeyear" required>
+              <mat-option *ngFor="let gradeyear of gradeyears" [value]="gradeyear.id">{{gradeyear.code + '-' + gradeyear.year}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gradeyearField.invalid">
+              <span *ngIf="gradeyearField.errors.required">Grade Year is required</span>
+              <span *ngIf="gradeyearField.errors.server">{{gradeyearField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Medium</mat-label>
+            <mat-select formControlName="medium" required>
+              <mat-option *ngFor="let medium of mediums" [value]="medium.id">{{medium.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="mediumField.invalid">
+              <span *ngIf="mediumField.errors.required">Medium is required</span>
+              <span *ngIf="mediumField.errors.server">{{mediumField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Homeroom Teacher</mat-label>
+            <mat-select formControlName="teacher" required>
+              <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.code + '-' + teacher.nametitle.name + ' ' + teacher.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="teacherField.invalid">
+              <span *ngIf="teacherField.errors.required">Homeroom Teacher is required</span>
+              <span *ngIf="teacherField.errors.server">{{teacherField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Assistant Teacher</mat-label>
+            <mat-select formControlName="assistantteacher" required>
+              <mat-option *ngFor="let assistantteacher of assistantteachers" [value]="assistantteacher.id">{{assistantteacher.code + '-' + assistantteacher.nametitle.name + ' ' + assistantteacher.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="assistantteacherField.invalid">
+              <span *ngIf="assistantteacherField.errors.required">Assistant Teacher is required</span>
+              <span *ngIf="assistantteacherField.errors.server">{{assistantteacherField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class Monitor</mat-label>
+            <mat-select formControlName="monitor" >
+              <mat-option *ngFor="let monitor of monitors" [value]="monitor.id">{{monitor.code + '-' + monitor.nametitle.name + ' ' + monitor.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="monitorField.invalid">
+              <span *ngIf="monitorField.errors.server">{{monitorField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class Vice Monitor</mat-label>
+            <mat-select formControlName="vicemonitor" >
+              <mat-option *ngFor="let vicemonitor of vicemonitors" [value]="vicemonitor.id">{{vicemonitor.code + '-' + vicemonitor.nametitle.name + ' ' + vicemonitor.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="vicemonitorField.invalid">
+              <span *ngIf="vicemonitorField.errors.server">{{vicemonitorField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class Students</mat-label>
+            <app-dual-listbox   placeholder="Add Class Students To Here" [sourceData]="students" formControlName="clsstudents"></app-dual-listbox>
+            <mat-error *ngIf="clsstudentsField.invalid">
+              <span *ngIf="clsstudentsField.errors.server">{{clsstudentsField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="form-group">
+          <h3 class="mb-0 mat-subheading-1 font-weight-light">Class Subject</h3>
+          <app-clssubject-update-sub-form [min]="0" [max]="0" formControlName="clssubjects"></app-clssubject-update-sub-form>
+          <div class="error-box" *ngIf="clssubjectsField.invalid && !clssubjectsField.pristine">
+            <p *ngIf="clssubjectsField.errors.min">Should has at least 0 class subject</p>
+            <p *ngIf="clssubjectsField.errors.max">Maximum allowed only 0 Class Subject</p>
+                <span *ngIf="clssubjectsField.errors.server">{{clssubjectsField.errors.server.join(', ')}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class Status</mat-label>
+            <mat-select formControlName="clsstatus" required>
+              <mat-option *ngFor="let clsstatus of clsstatuses" [value]="clsstatus.id">{{clsstatus.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="clsstatusField.invalid">
+              <span *ngIf="clsstatusField.errors.required">Class Status is required</span>
+              <span *ngIf="clsstatusField.errors.server">{{clsstatusField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/clses" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Classes</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

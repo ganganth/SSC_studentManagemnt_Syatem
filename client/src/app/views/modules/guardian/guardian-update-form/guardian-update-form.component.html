@@ -1,0 +1,221 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change guardian details"></app-no-privilege>
+<div *ngIf="this.guardian && privilege.update">
+  <app-page-header
+    title="Guardian Change Form of {{ guardian.code + '-' + guardian.nametitle.name + ' ' + guardian.callingname }}"
+    [breadcrumbSegments]="['Guardians', 'Show All Guardians', 'Change Details of ' + guardian.code + '-' + guardian.nametitle.name + ' ' + guardian.callingname]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Title</mat-label>
+                <mat-select formControlName="nametitle" required>
+                  <mat-option *ngFor="let nametitle of nametitles" [value]="nametitle.id">{{nametitle.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="nametitleField.invalid">
+                  <span *ngIf="nametitleField.errors.required">Title is required</span>
+                  <span *ngIf="nametitleField.errors.server">{{nametitleField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-8">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Calling Name</mat-label>
+                <input matInput formControlName="callingname" required>
+                <mat-hint>Ex: Sandun</mat-hint>
+                <mat-error *ngIf="callingnameField.invalid">
+                  <span *ngIf="callingnameField.errors.required">Calling Name is required</span>
+                  <span *ngIf="callingnameField.errors.server">{{callingnameField.errors.server.join(', ')}}</span>
+                  <span *ngIf="callingnameField.errors.minlength">Calling Name should has at least null characters. </span>
+                  <span *ngIf="callingnameField.errors.maxlength">Calling Name can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Civilstatus</mat-label>
+                <mat-select formControlName="civilstatus" >
+                  <mat-option *ngFor="let civilstatus of civilstatuses" [value]="civilstatus.id">{{civilstatus.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="civilstatusField.invalid">
+                  <span *ngIf="civilstatusField.errors.server">{{civilstatusField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-8">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Full Name</mat-label>
+                <input matInput formControlName="fullname" required>
+                <mat-hint>Ex: Kamal Perera</mat-hint>
+                <mat-error *ngIf="fullnameField.invalid">
+                  <span *ngIf="fullnameField.errors.required">Full Name is required</span>
+                  <span *ngIf="fullnameField.errors.server">{{fullnameField.errors.server.join(', ')}}</span>
+                  <span *ngIf="fullnameField.errors.minlength">Full Name should has at least null characters. </span>
+                  <span *ngIf="fullnameField.errors.maxlength">Full Name can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender" >
+              <mat-option *ngFor="let gender of genders" [value]="gender.id">{{gender.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="genderField.invalid">
+              <span *ngIf="genderField.errors.server">{{genderField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>NIC Number</mat-label>
+            <input matInput formControlName="nic" required>
+            <mat-hint>Ex: 940081009V</mat-hint>
+            <mat-error *ngIf="nicField.invalid">
+              <span *ngIf="nicField.errors.required">NIC Number is required</span>
+              <span *ngIf="nicField.errors.server">{{nicField.errors.server.join(', ')}}</span>
+              <span *ngIf="nicField.errors.minlength">NIC Number should has at least 10 characters. </span>
+              <span *ngIf="nicField.errors.maxlength">NIC Number can have a maximum of 12 characters. </span>
+              <span *ngIf="nicField.errors.pattern">NIC Number is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput formControlName="mobile" required>
+                <mat-hint>Ex: 0789456123</mat-hint>
+                <mat-error *ngIf="mobileField.invalid">
+                  <span *ngIf="mobileField.errors.required">Mobile Number is required</span>
+                  <span *ngIf="mobileField.errors.server">{{mobileField.errors.server.join(', ')}}</span>
+                  <span *ngIf="mobileField.errors.minlength">Mobile Number should has 10 characters. </span>
+                  <span *ngIf="mobileField.errors.maxlength">Mobile Number should has 10 characters. </span>
+                  <span *ngIf="mobileField.errors.pattern">Mobile Number is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Land Number</mat-label>
+                <input matInput formControlName="land" >
+                <mat-hint>Ex: 0789455123</mat-hint>
+                <mat-error *ngIf="landField.invalid">
+                  <span *ngIf="landField.errors.server">{{landField.errors.server.join(', ')}}</span>
+                  <span *ngIf="landField.errors.minlength">Land Number should has 10 characters. </span>
+                  <span *ngIf="landField.errors.maxlength">Land Number should has 10 characters. </span>
+                  <span *ngIf="landField.errors.pattern">Land Number is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Email Address</mat-label>
+                <input matInput formControlName="email" >
+                <mat-hint>Ex: user@gmail.com</mat-hint>
+                <mat-error *ngIf="emailField.invalid">
+                  <span *ngIf="emailField.errors.server">{{emailField.errors.server.join(', ')}}</span>
+                  <span *ngIf="emailField.errors.minlength">Email Address should has at least 5 characters. </span>
+                  <span *ngIf="emailField.errors.maxlength">Email Address can have a maximum of 255 characters. </span>
+                  <span *ngIf="emailField.errors.pattern">Email Address is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Occupation</mat-label>
+            <input matInput formControlName="occupation" >
+            <mat-hint>Ex: Doctor</mat-hint>
+            <mat-error *ngIf="occupationField.invalid">
+              <span *ngIf="occupationField.errors.server">{{occupationField.errors.server.join(', ')}}</span>
+              <span *ngIf="occupationField.errors.minlength">Occupation should has at least 4 characters. </span>
+              <span *ngIf="occupationField.errors.maxlength">Occupation can have a maximum of 255 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Home Address</mat-label>
+            <textarea matInput formControlName="address" required></textarea>
+            <mat-hint>Ex: 123, Colombo Road, Gampaha</mat-hint>
+            <mat-error *ngIf="addressField.invalid">
+              <span *ngIf="addressField.errors.required">Home Address is required</span>
+              <span *ngIf="addressField.errors.server">{{addressField.errors.server.join(', ')}}</span>
+              <span *ngIf="addressField.errors.minlength">Home Address should has at least 4 characters. </span>
+              <span *ngIf="addressField.errors.maxlength">Home Address can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Office Number 1</mat-label>
+            <input matInput formControlName="officetel1" >
+            <mat-hint>Ex: 0789456123</mat-hint>
+            <mat-error *ngIf="officetel1Field.invalid">
+              <span *ngIf="officetel1Field.errors.server">{{officetel1Field.errors.server.join(', ')}}</span>
+              <span *ngIf="officetel1Field.errors.minlength">Office Number 1 should has 10 characters. </span>
+              <span *ngIf="officetel1Field.errors.maxlength">Office Number 1 should has 10 characters. </span>
+              <span *ngIf="officetel1Field.errors.pattern">Office Number 1 is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Office Number 2</mat-label>
+            <input matInput formControlName="officetel2" >
+            <mat-hint>Ex: 0339455123</mat-hint>
+            <mat-error *ngIf="officetel2Field.invalid">
+              <span *ngIf="officetel2Field.errors.server">{{officetel2Field.errors.server.join(', ')}}</span>
+              <span *ngIf="officetel2Field.errors.minlength">Office Number 2 should has 10 characters. </span>
+              <span *ngIf="officetel2Field.errors.maxlength">Office Number 2 should has 10 characters. </span>
+              <span *ngIf="officetel2Field.errors.pattern">Office Number 2 is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Office Address</mat-label>
+            <textarea matInput formControlName="officeaddress" required></textarea>
+            <mat-hint>Ex: 123, Colombo Road, Gampaha</mat-hint>
+            <mat-error *ngIf="officeaddressField.invalid">
+              <span *ngIf="officeaddressField.errors.required">Office Address is required</span>
+              <span *ngIf="officeaddressField.errors.server">{{officeaddressField.errors.server.join(', ')}}</span>
+              <span *ngIf="officeaddressField.errors.minlength">Office Address should has at least 4 characters. </span>
+              <span *ngIf="officeaddressField.errors.maxlength">Office Address can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/guardians" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Guardians</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

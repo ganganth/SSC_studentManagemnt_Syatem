@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="timetable" to-string-ts="timetable.code" to-string-java="timetable.getCode()">
+    <code length="10" prefix="TT" searchable="yes" exist-on-table="yes"/>
+
+    <reference-property searchable="yes" exist-on-table="yes" required="yes" name="grade" label="Grade" referenced-from="grade" service-method="getAll" to-string-java="grade.getName()" to-string-ts="grade.name"/>
+
+    <reference-property searchable="yes" exist-on-table="yes" required="yes" name="gradeyear" label="Grade Year" referenced-from="gradeyear" service-method="getAllBasic" to-string-java="gradeyear.getCode() + #quat; #quat; + gradeyear.getYear()" to-string-ts="gradeyear.code + '-' + gradeyear.year"/>
+
+    <reference-property searchable="yes" required="yes" exist-on-table="yes" name="subject" label="Subject" referenced-from="subject" service-method="getAllBasic" to-string-java="subject.getCode() + #quat; #quat; + subject.getName()" to-string-ts="subject.code + '-' + subject.name"/>
+
+    <reference-property exist-on-table="yes" searchable="yes" required="yes" name="teacher" label="Subject Teacher" to-string-java="teacher.getCode() + #quat;-#quat; + teacher.getNametitle().getName() + #quat; #quat; + teacher.getCallingname()" to-string-ts="teacher.code + '-' + teacher.nametitle.name + ' ' + teacher.callingname" service-method="getAllBasic"
+                        referenced-from="employee"/>
+
+    <reference-property required="yes" exist-on-table="yes" name="day" label="Day" referenced-from="day" service-method="getAll" to-string-java="day.getName()" to-string-ts="day.name"/>
+
+    <reference-property required="yes" exist-on-table="yes" searchable="yes" name="cls" label="Class" to-string-java="cls.getName()" to-string-ts="cls.name" service-method="getAllBasic" referenced-from="cls"/>
+
+    <reference-property required="yes" name="timetablestatus" label="Timetable Status" referenced-from="timetablestatus" service-method="getAll" to-string-java="timetablestatus.getName()" to-string-ts="timetablestatus.name"/>
+
+    <text-property name="description" label="Description" example=""/>
+
+    <time-property required="yes" exist-on-table="yes" name="tostart" label="Start Time" example=""/>
+    <time-property required="yes" exist-on-table="yes" name="toend" label="End Time" example=""/>
+
+
+</regular-module>
+
+

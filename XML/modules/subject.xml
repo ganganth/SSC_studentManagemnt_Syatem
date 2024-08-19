@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="subject" to-string-ts="subject.code" to-string-java="subject.getCode()">
+    <code length="10" prefix="S" searchable="yes" exist-on-table="yes"/>
+
+    <varchar-property name="name" label="Subject Name" example="" required="yes" exist-on-table="yes" searchable="yes"/>
+
+    <reference-property searchable="yes" required="yes" name="grade" label="Grade" referenced-from="grade" service-method="getAll" to-string-java="grade.getName()" to-string-ts="grade.name"/>
+    <reference-property searchable="yes" required="yes" name="medium" label="Medium" referenced-from="medium" service-method="getAll" to-string-java="medium.getName()" to-string-ts="medium.name"/>
+
+    <multiple-reference-property name="subjectteacher" label="Subject Teacher" to-string-java="employee.getCode() + #quat;-#quat; + employee.getNametitle.getName() + #quat; #quat; + employee.getCallingname()" to-string-ts="employee.code + '-' + employee.nametitle.name + ' ' + employee.callingname" service-method="getAllBasic"
+                                 referenced-from="employee"/>
+
+
+    <reference-property required="yes" name="subjectstatus" label="Subject Status" referenced-from="subjectstatus" service-method="getAll" to-string-java="subjectstatus.getName()" to-string-ts="subjectstatus.name"/>
+
+
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

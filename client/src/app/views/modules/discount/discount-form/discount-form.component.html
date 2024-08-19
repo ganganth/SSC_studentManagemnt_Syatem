@@ -1,0 +1,82 @@
+<app-no-privilege message="No privilege to add new discount" *ngIf="!privilege.add"></app-no-privilege>
+<div *ngIf="privilege.add">
+  <app-page-header title="Discount Form" [breadcrumbSegments]="['Discounts', 'Add New Discount']"></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="nameField.invalid">
+              <span *ngIf="nameField.errors.required">Name is required</span>
+              <span *ngIf="nameField.errors.server">{{nameField.errors.server.join(', ')}}</span>
+              <span *ngIf="nameField.errors.minlength">Name should has at least null characters. </span>
+              <span *ngIf="nameField.errors.maxlength">Name can have a maximum of 255 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Fixed Amount</mat-label>
+            <input type="number" matInput formControlName="fixedamount" >
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="fixedamountField.invalid">
+              <span *ngIf="fixedamountField.errors.server">{{fixedamountField.errors.server.join(', ')}}</span>
+              <span *ngIf="fixedamountField.errors.min">Fixed Amount should be equal or greater than 0</span>
+              <span *ngIf="fixedamountField.errors.max">Fixed Amount should be equal or less than 99999999</span>
+              <span *ngIf="fixedamountField.errors.pattern">Fixed Amount is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Percentage</mat-label>
+            <input type="number" matInput formControlName="percentage" >
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="percentageField.invalid">
+              <span *ngIf="percentageField.errors.server">{{percentageField.errors.server.join(', ')}}</span>
+              <span *ngIf="percentageField.errors.min">Percentage should be equal or greater than 0</span>
+              <span *ngIf="percentageField.errors.max">Percentage should be equal or less than 100</span>
+              <span *ngIf="percentageField.errors.pattern">Percentage is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Discount Type</mat-label>
+            <mat-select formControlName="discounttype" required>
+              <mat-option *ngFor="let discounttype of discounttypes" [value]="discounttype.id">{{discounttype.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="discounttypeField.invalid">
+              <span *ngIf="discounttypeField.errors.required">Discount Type is required</span>
+              <span *ngIf="discounttypeField.errors.server">{{discounttypeField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/discounts" class="ml-0" mat-flat-button color="primary"><mat-icon>list</mat-icon> All Discounts</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="reset"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <span class="text-warning">*</span> Required Fields
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

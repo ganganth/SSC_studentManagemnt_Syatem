@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="lesson" to-string-ts="lesson.code" to-string-java="lesson.getCode()">
+    <code length="10" prefix="LS" searchable="yes" exist-on-table="yes"/>
+    <reference-property searchable="yes" exist-on-table="yes" required="yes" name="grade" label="Grade" referenced-from="grade" service-method="getAll" to-string-java="grade.getName()" to-string-ts="grade.name"/>
+    <reference-property searchable="yes" required="yes" exist-on-table="yes" name="subject" label="Subject" referenced-from="subject" service-method="getAllBasic" to-string-java="subject.getCode() + #quat; #quat; + subject.getName()" to-string-ts="subject.code + '-' + subject.name"/>
+    <reference-property required="yes" name="lessonstatus" label="Lesson Status" referenced-from="lessonstatus" service-method="getAll" to-string-java="lessonstatus.getName()" to-string-ts="lessonstatus.name"/>
+    <text-property name="description" label="Description" example=""/>
+    <varchar-property name="name" label="Lesson Name" example="" required="yes" exist-on-table="yes" searchable="yes"/>
+</regular-module>
+
+

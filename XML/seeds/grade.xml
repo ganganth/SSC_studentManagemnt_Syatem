@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "../dtd/seed.dtd">
+<seed name="grade" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="20"/>
+    </properties>
+    <values>
+        <value><data>Grade 1</data></value>
+        <value><data>Grade 2</data></value>
+        <value><data>Grade 3</data></value>
+        <value><data>Grade 4</data></value>
+        <value><data>Grade 5</data></value>
+    </values>
+</seed>

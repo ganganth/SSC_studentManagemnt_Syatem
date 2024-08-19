@@ -1,0 +1,74 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a lesson"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !lesson" message="Lesson Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="lesson && privilege.showOne">
+  <app-page-header
+    title="Lesson Detail Page of {{ lesson.code }}"
+    [breadcrumbSegments]="['Lessons', 'Show All Lessons', 'Details of ' + lesson.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{lesson.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{lesson.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(lesson.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{lesson.code}}</td>
+              </tr>
+              <tr>
+                <th>Grade</th>
+                <td>{{lesson.grade.name}}</td>
+              </tr>
+              <tr>
+                <th>Subject</th>
+                <td>{{lesson.subject.code + '-' + lesson.subject.name}}</td>
+              </tr>
+              <tr>
+                <th>Lesson Status</th>
+                <td>{{lesson.lessonstatus.name}}</td>
+              </tr>
+              <tr *ngIf="lesson.description">
+                <th>Description</th>
+                <td [innerHTML]="lesson.description | nl2br"></td>
+              </tr>
+              <tr>
+                <th>Lesson Name</th>
+                <td>{{lesson.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/lessons/edit/{{lesson.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/lessons/add" mat-stroked-button><mat-icon>add</mat-icon> New Lesson</button>
+    <button *ngIf="privilege.showAll" routerLink="/lessons" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Lessons</button>
+  </div>
+</div>

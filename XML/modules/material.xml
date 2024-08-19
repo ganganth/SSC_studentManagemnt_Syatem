@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="material" to-string-ts="material.code + '-' + material.title" to-string-java="material.getCode() + #quat;-#quat; + material.getTitle()">
+
+    <code length="10" prefix="MAT" searchable="yes" exist-on-table="yes"/>
+    
+    <varchar-property name="name" label="Material Title" example="Grade 8 Mathematics Trigonometry" basic="yes" searchable="yes" exist-on-table="yes" required="yes"/>
+
+    <file-property name="file" label="Digital Copy" accept="application/pdf"/>
+
+    <reference-property searchable="yes" required="yes" exist-on-table="yes" name="subject" label="Subject" referenced-from="subject" service-method="getAllBasic" to-string-java="subject.getCode() + #quat; #quat; + subject.getName()" to-string-ts="subject.code + '-' + subject.name"/>
+    <reference-property searchable="yes" required="yes" exist-on-table="yes" name="lesson" label="Lesson" referenced-from="lesson" service-method="getAllBasic" to-string-java="lesson.getName()" to-string-ts="lesson.name"/>
+
+    <date-property name="date" label="Publishing Date" example="02-03-2022"/>
+
+    <reference-property name="employee" label="Teacher" to-string-java="employee.getNametitle().getName() + #quat;-#quat; + employee.getCallingname()" to-string-ts="employee.nametitle.name + '-' + employee.callingname" service-method="getAllBasic" referenced-from="employee"/>
+
+    <reference-property required="yes" searchable="yes" exist-on-table="yes" name="materialmedium" label="Material Medium" referenced-from="materialmedium" service-method="getAll" to-string-java="materialmedium.getName()" to-string-ts="materialmedium.name"/>
+
+    <reference-property  width="4" required="yes" default-value="1" insertable="no" searchable="yes" exist-on-table="yes" name="materialstatus" label="Material Status" referenced-from="materialstatus" service-method="getAll" to-string-java="materialstatus.getName()" to-string-ts="materialstatus.name"/>
+
+    <text-property name="description" label="Description" example=""/>
+
+</regular-module>

@@ -1,0 +1,134 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a student"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !student" message="Student Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="student && privilege.showOne">
+  <app-page-header
+    title="Student Detail Page of {{ student.code + '-' + student.nametitle.name + ' ' + student.callingname }}"
+    [breadcrumbSegments]="['Students', 'Show All Students', 'Details of ' + student.code + '-' + student.nametitle.name + ' ' + student.callingname]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{student.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{student.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(student.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{student.code}}</td>
+              </tr>
+              <tr>
+                <th>Title</th>
+                <td>{{student.nametitle.name}}</td>
+              </tr>
+              <tr>
+                <th>Calling Name</th>
+                <td>{{student.callingname}}</td>
+              </tr>
+              <tr>
+                <th>Full Name</th>
+                <td>{{student.fullname}}</td>
+              </tr>
+              <tr>
+                <th>Date Of Birth</th>
+                <td>{{student.dobirth | date: 'fullDate'}}</td>
+              </tr>
+              <tr>
+                <th>Gender</th>
+                <td>{{student.gender.name}}</td>
+              </tr>
+              <tr *ngIf="student.nic">
+                <th>NIC Number</th>
+                <td>{{student.nic}}</td>
+              </tr>
+              <tr *ngIf="student.guardian">
+                <th>Guardian</th>
+                <td>{{student.guardian.callingname + ' ' + student.guardian.nic}}</td>
+              </tr>
+              <tr *ngIf="student.guardianrelationship">
+                <th>Guardian Relationship</th>
+                <td>{{student.guardianrelationship.name}}</td>
+              </tr>
+              <tr *ngIf="student.bloodtype">
+                <th>Blood Type</th>
+                <td>{{student.bloodtype.name}}</td>
+              </tr>
+              <tr *ngIf="student.religion">
+                <th>Religion</th>
+                <td>{{student.religion.name}}</td>
+              </tr>
+              <tr *ngIf="student.ethnicity">
+                <th>Ethnicity</th>
+                <td>{{student.ethnicity.name}}</td>
+              </tr>
+              <tr *ngIf="student.house">
+                <th>House</th>
+                <td>{{student.house.name}}</td>
+              </tr>
+              <tr *ngIf="student.studentstatus">
+                <th>Student Status</th>
+                <td>{{student.studentstatus.name}}</td>
+              </tr>
+              <tr>
+                <th>Mobile Number</th>
+                <td>{{student.mobile}}</td>
+              </tr>
+              <tr *ngIf="student.land">
+                <th>Land Number</th>
+                <td>{{student.land}}</td>
+              </tr>
+              <tr *ngIf="student.email">
+                <th>Email Address</th>
+                <td>{{student.email}}</td>
+              </tr>
+              <tr>
+                <th>Joined Date</th>
+                <td>{{student.joineddate | date: 'fullDate'}}</td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td [innerHTML]="student.address | nl2br"></td>
+              </tr>
+              <tr *ngIf="student.admissionfee">
+                <th>Admission Fee</th>
+                <td>{{student.admissionfee | currency: 'Rs.'}}</td>
+              </tr>
+              <tr *ngIf="student.description">
+                <th>Description</th>
+                <td [innerHTML]="student.description | nl2br"></td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/students/edit/{{student.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/students/add" mat-stroked-button><mat-icon>add</mat-icon> New Student</button>
+    <button *ngIf="privilege.showAll" routerLink="/students" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Students</button>
+  </div>
+</div>

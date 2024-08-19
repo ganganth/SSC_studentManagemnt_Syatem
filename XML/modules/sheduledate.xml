@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="sheduledate" to-string-ts="sheduledate.code + '-' sheduledate.date" to-string-java="sheduledate.getCode() + #quat;-#quat; + sheduledate.getDate()">
+    <code length="10" prefix="SD" searchable="yes" exist-on-table="yes"/>
+
+    <date-property basic="yes" required="yes" exist-on-table="yes" name="date" label="Date" example=""/>
+
+    <time-property basic="yes" required="yes" exist-on-table="yes" name="tostart" label="Start Time" example=""/>
+    <time-property basic="yes" required="yes" exist-on-table="yes" name="toend" label="End Time" example=""/>
+
+
+    <reference-property basic="yes" required="yes" name="scheduledatestatus" label="Schedule Date Status" referenced-from="sheduledatestatus" service-method="getAll" to-string-java="sheduledatestatus.getName()" to-string-ts="sheduledatestatus.name"/>
+    
+
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

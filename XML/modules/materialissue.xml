@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="materialissue" to-string-ts="materialissue.code" to-string-java="materialissue.getCode()">
+
+    <code length="10" prefix="MI" searchable="yes" exist-on-table="yes"/>
+
+    <reference-property exist-on-table="yes" name="student" label="Student" to-string-java="student.getCallingname() + #quat;-#quat; + student.getCode()" to-string-ts="student.name + '-' + student.code" service-method="getAllBasic" referenced-from="student" basic="yes"/>
+
+    <reference-property exist-on-table="yes" name="material" label="Material" to-string-java="material.getTitle()" to-string-ts="material.title" service-method="getAllBasic" referenced-from="material" basic="yes"/>
+    <reference-property searchable="yes" exist-on-table="yes" required="yes" name="gradeyear" label="Grade Year" referenced-from="gradeyear" service-method="getAllBasic" to-string-java="gradeyear.getCode() + #quat; #quat; + gradeyear.getYear()" to-string-ts="gradeyear.code + '-' + gradeyear.year"/>
+
+    <reference-property required="yes" exist-on-table="yes" searchable="yes" name="cls" label="Class" to-string-java="cls.getName()" to-string-ts="class.name" service-method="getAllBasic" referenced-from="cls"/>
+
+
+
+    <date-property name="date" exist-on-table="yes" insertable="no" label="Date of Issued" example="02-03-2022"/>
+
+    <text-property name="description" label="Description" example=""/>
+</regular-module>

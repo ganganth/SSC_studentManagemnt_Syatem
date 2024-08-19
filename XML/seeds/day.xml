@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "../dtd/seed.dtd">
+<seed name="day" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="20"/>
+    </properties>
+    <values>
+        <value><data>Monday</data></value>
+        <value><data>Tuesday</data></value>
+        <value><data>Wednesday</data></value>
+        <value><data>Thursday</data></value>
+        <value><data>Friday</data></value>
+        <value><data>Saturday</data></value>
+        <value><data>Sunday</data></value>
+    </values>
+</seed>

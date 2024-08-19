@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="exam" to-string-ts="exam.code" to-string-java="exam.getCode()">
+    <code length="10" prefix="EX" searchable="yes" exist-on-table="yes"/>
+
+
+    <date-property required="yes" exist-on-table="yes" name="date" label="Exam Date" example=""/>
+
+    <time-property name="tostart" label="Start Time" example="" required="yes" exist-on-table="yes"/>
+
+    <time-property name="toend" label="End Time" example="" required="yes" exist-on-table="yes"/>
+
+    <reference-property required="yes" name="gradeyear" label="Grade Year" referenced-from="gradeyear" service-method="getAllBasic" to-string-java="gradeyear.getCode() + #quat; #quat; + gradeyear.getYear()" to-string-ts="gradeyear.code + '-' + gradeyear.year"/>
+
+    <reference-property required="yes" name="subject" exist-on-table="yes" label="Subject" referenced-from="subject" service-method="getAllBasic" to-string-java="subject.getCode() + #quat; #quat; + subject.getName()" to-string-ts="subject.code + '-' + subject.name"/>
+
+    <reference-property exist-on-table="yes" insertable="no" default-value="1" required="yes" name="examstatus" label="Exam Status" referenced-from="examstatus" service-method="getAll" to-string-java="examstatus.getName()" to-string-ts="examstatus.name"/>
+    
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

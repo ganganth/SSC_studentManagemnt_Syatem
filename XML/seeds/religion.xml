@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "../dtd/seed.dtd">
+<seed name="religion" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="20"/>
+    </properties>
+    <values>
+        <value><data>Buddhist</data></value>
+        <value><data>Catholic</data></value>
+        <value><data>Muslim</data></value>
+    </values>
+</seed>

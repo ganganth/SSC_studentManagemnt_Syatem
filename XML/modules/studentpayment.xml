@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="studentpayment" to-string-ts="studentpayment.code" to-string-java="studentpayment.getCode()">
+    <code length="10" prefix="P" searchable="yes" exist-on-table="yes"/>
+
+    <reference-property basic="yes" exist-on-table="yes" required="yes" name="student" label="Student" referenced-from="student" service-method="getAllBasic" to-string-java="student.getCode() + #quat;-#quat; + student.getNametitle.getName() + #quat; #quat; + student.getCallingname()" to-string-ts="student.code + '-' + student.nametitle.name + ' ' + student.callingname"/>
+
+
+    <reference-property basic="yes" exist-on-table="yes" required="yes" name="enrollment" label="Enrollment" referenced-from="enrollment" service-method="getAllBasic" to-string-java="enrollment.getCode()" to-string-ts="enrollment.code"/>
+
+
+
+
+    <decimal-property insertable="no" updatable="no" name="prevbalance" label="Previous Balance" example="" precision="10" scale="2" min="0" max="999999"/>
+    <decimal-property required="yes" exist-on-table="yes" name="amount" label="Amount" example="" precision="10" scale="2" min="0" max="999999"/>
+    <decimal-property  insertable="no" updatable="no" exist-on-table="yes"  name="balance" label="Balance" example="" precision="10" scale="2" min="0" max="999999"/>
+
+    <int-property insertable="no" updatable="no" exist-on-table="yes" name="insno" label="Installment Number" example=""/>
+
+
+    <date-property required="yes" exist-on-table="yes" name="date" label="Paid Date" example=""/>
+
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

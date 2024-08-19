@@ -1,0 +1,127 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change material details"></app-no-privilege>
+<div *ngIf="this.material && privilege.update">
+  <app-page-header
+    title="Material Change Form of {{ material.code + '-' + material.title }}"
+    [breadcrumbSegments]="['Materials', 'Show All Materials', 'Change Details of ' + material.code + '-' + material.title]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Material Title</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-hint>Ex: Grade 8 Mathematics Trigonometry</mat-hint>
+            <mat-error *ngIf="nameField.invalid">
+              <span *ngIf="nameField.errors.required">Material Title is required</span>
+              <span *ngIf="nameField.errors.server">{{nameField.errors.server.join(', ')}}</span>
+              <span *ngIf="nameField.errors.minlength">Material Title should has at least null characters. </span>
+              <span *ngIf="nameField.errors.maxlength">Material Title can have a maximum of 255 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Digital Copy</mat-label>
+            <app-file-chooser placeholder="No choosed digital copies to show" [min]="0" [max]="1" [accept]="['application/pdf']" formControlName="file"></app-file-chooser>
+            <mat-hint>Select any application/pdf file</mat-hint>
+            <mat-error *ngIf="fileField.invalid">
+              <span *ngIf="fileField.errors.server">{{fileField.errors.server.join(', ')}}</span>
+              <span *ngIf="fileField.errors.min">digital copy is required</span>
+              <span *ngIf="fileField.errors.max">Maximum allowed digital copy count is 1</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Subject</mat-label>
+            <mat-select formControlName="subject" required>
+              <mat-option *ngFor="let subject of subjects" [value]="subject.id">{{subject.code + '-' + subject.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="subjectField.invalid">
+              <span *ngIf="subjectField.errors.required">Subject is required</span>
+              <span *ngIf="subjectField.errors.server">{{subjectField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Lesson</mat-label>
+            <mat-select formControlName="lesson" required>
+              <mat-option *ngFor="let lesson of lessons" [value]="lesson.id">{{lesson.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="lessonField.invalid">
+              <span *ngIf="lessonField.errors.required">Lesson is required</span>
+              <span *ngIf="lessonField.errors.server">{{lessonField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Publishing Date</mat-label>
+            <input matInput [matDatepicker]="pickerdate" formControlName="date" >
+            <mat-datepicker-toggle matSuffix [for]="pickerdate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerdate></mat-datepicker>
+            <mat-hint>Ex: 02-03-2022</mat-hint>
+            <mat-error *ngIf="dateField.invalid">
+              <span *ngIf="dateField.errors.server">{{dateField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Teacher</mat-label>
+            <mat-select formControlName="employee" >
+              <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.nametitle.name + '-' + employee.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="employeeField.invalid">
+              <span *ngIf="employeeField.errors.server">{{employeeField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Material Medium</mat-label>
+            <mat-select formControlName="materialmedium" required>
+              <mat-option *ngFor="let materialmedium of materialmediums" [value]="materialmedium.id">{{materialmedium.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="materialmediumField.invalid">
+              <span *ngIf="materialmediumField.errors.required">Material Medium is required</span>
+              <span *ngIf="materialmediumField.errors.server">{{materialmediumField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Material Status</mat-label>
+            <mat-select formControlName="materialstatus" required>
+              <mat-option *ngFor="let materialstatus of materialstatuses" [value]="materialstatus.id">{{materialstatus.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="materialstatusField.invalid">
+              <span *ngIf="materialstatusField.errors.required">Material Status is required</span>
+              <span *ngIf="materialstatusField.errors.server">{{materialstatusField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/materials" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Materials</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

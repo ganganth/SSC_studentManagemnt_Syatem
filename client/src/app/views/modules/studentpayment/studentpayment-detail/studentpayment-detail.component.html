@@ -1,0 +1,86 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a student payment"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !studentpayment" message="Student Payment Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="studentpayment && privilege.showOne">
+  <app-page-header
+    title="Student Payment Detail Page of {{ studentpayment.code }}"
+    [breadcrumbSegments]="['Student Payments', 'Show All Student Payments', 'Details of ' + studentpayment.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{studentpayment.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{studentpayment.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(studentpayment.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{studentpayment.code}}</td>
+              </tr>
+              <tr>
+                <th>Student</th>
+                <td>{{studentpayment.student.code + '-' + studentpayment.student.nametitle.name + ' ' + studentpayment.student.callingname}}</td>
+              </tr>
+              <tr>
+                <th>Enrollment</th>
+                <td>{{studentpayment.enrollment.code}}</td>
+              </tr>
+              <tr *ngIf="studentpayment.prevbalance">
+                <th>Previous Balance</th>
+                <td>{{studentpayment.prevbalance | currency: 'Rs.'}}</td>
+              </tr>
+              <tr>
+                <th>Amount</th>
+                <td>{{studentpayment.amount | currency: 'Rs.'}}</td>
+              </tr>
+              <tr *ngIf="studentpayment.balance">
+                <th>Balance</th>
+                <td>{{studentpayment.balance | currency: 'Rs.'}}</td>
+              </tr>
+              <tr *ngIf="studentpayment.insno">
+                <th>Installment Number</th>
+                <td>{{studentpayment.insno}}</td>
+              </tr>
+              <tr>
+                <th>Paid Date</th>
+                <td>{{studentpayment.date | date: 'fullDate'}}</td>
+              </tr>
+              <tr *ngIf="studentpayment.description">
+                <th>Description</th>
+                <td [innerHTML]="studentpayment.description | nl2br"></td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/studentpayments/edit/{{studentpayment.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/studentpayments/add" mat-stroked-button><mat-icon>add</mat-icon> New Student Payment</button>
+    <button *ngIf="privilege.showAll" routerLink="/studentpayments" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Student Payments</button>
+  </div>
+</div>

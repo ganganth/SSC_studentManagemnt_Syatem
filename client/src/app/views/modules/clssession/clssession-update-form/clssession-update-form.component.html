@@ -1,0 +1,101 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change class Session details"></app-no-privilege>
+<div *ngIf="this.clssession && privilege.update">
+  <app-page-header
+    title="Class Session Change Form of {{ clssession.code }}"
+    [breadcrumbSegments]="['Class Sessions', 'Show All Class Sessions', 'Change Details of ' + clssession.code]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class</mat-label>
+            <mat-select formControlName="cls" required>
+              <mat-option *ngFor="let cls of clses" [value]="cls.id">{{class.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="clsField.invalid">
+              <span *ngIf="clsField.errors.required">Class is required</span>
+              <span *ngIf="clsField.errors.server">{{clsField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Grade</mat-label>
+            <mat-select formControlName="grade" required>
+              <mat-option *ngFor="let grade of grades" [value]="grade.id">{{grade.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gradeField.invalid">
+              <span *ngIf="gradeField.errors.required">Grade is required</span>
+              <span *ngIf="gradeField.errors.server">{{gradeField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Time Table</mat-label>
+            <mat-select formControlName="timetable" required>
+              <mat-option *ngFor="let timetable of timetables" [value]="timetable.id">{{timetable.code}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="timetableField.invalid">
+              <span *ngIf="timetableField.errors.required">Time Table is required</span>
+              <span *ngIf="timetableField.errors.server">{{timetableField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Clssession Status</mat-label>
+            <mat-select formControlName="clssessionstatus" required>
+              <mat-option *ngFor="let clssessionstatus of clssessionstatuses" [value]="clssessionstatus.id">{{clssessionstatus.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="clssessionstatusField.invalid">
+              <span *ngIf="clssessionstatusField.errors.required">Clssession Status is required</span>
+              <span *ngIf="clssessionstatusField.errors.server">{{clssessionstatusField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Schedule Date</mat-label>
+            <mat-select formControlName="sheduledate" required>
+              <mat-option *ngFor="let sheduledate of sheduledates" [value]="sheduledate.id">{{sheduledate.code + '-' + sheduledate.date}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="sheduledateField.invalid">
+              <span *ngIf="sheduledateField.errors.required">Schedule Date is required</span>
+              <span *ngIf="sheduledateField.errors.server">{{sheduledateField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class Lesson</mat-label>
+            <app-dual-listbox   placeholder="Add Class Lesson To Here" [sourceData]="lessons" formControlName="clssessionlessons"></app-dual-listbox>
+            <mat-error *ngIf="clssessionlessonsField.invalid">
+              <span *ngIf="clssessionlessonsField.errors.server">{{clssessionlessonsField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/clssessions" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Class Sessions</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

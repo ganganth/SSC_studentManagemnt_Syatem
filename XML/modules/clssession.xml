@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="clssession" to-string-ts="clssession.code" to-string-java="clssession.getCode()">
+    <code length="10" prefix="CS" searchable="yes" exist-on-table="yes"/>
+
+    <reference-property required="yes" exist-on-table="yes" searchable="yes" name="cls" label="Class" to-string-java="cls.getName()" to-string-ts="class.name" service-method="getAllBasic" referenced-from="cls"/>
+
+    <reference-property searchable="yes" exist-on-table="yes" required="yes" name="grade" label="Grade" referenced-from="grade" service-method="getAll" to-string-java="grade.getName()" to-string-ts="grade.name"/>
+
+    <reference-property required="yes"  name="timetable" label="Time Table" to-string-java="timetable.getCode()" to-string-ts="timetable.code" service-method="getAllBasic" referenced-from="timetable"/>
+
+    <reference-property required="yes" name="clssessionstatus" label="Clssession Status" referenced-from="clssessionstatus" service-method="getAll" to-string-java="clssessionstatus.getName()" to-string-ts="clssessionstatus.name"/>
+
+    <reference-property required="yes" exist-on-table="yes" name="sheduledate" label="Schedule Date" to-string-java="sheduledate.getCode() + #quat;-#quat; + sheduledate.getDate()" to-string-ts="sheduledate.code + '-' sheduledate.date" service-method="getAllBasic" referenced-from="sheduledate"/>
+
+    <text-property name="description" label="Description" example=""/>
+
+    <multiple-reference-property name="clssessionlesson" label="Class Lesson" to-string-java="lesson.getName()" to-string-ts="lesson.name" service-method="getAllBasic" referenced-from="lesson"/>
+
+</regular-module>
+
+

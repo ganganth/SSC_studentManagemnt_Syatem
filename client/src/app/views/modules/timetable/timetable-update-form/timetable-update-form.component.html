@@ -1,0 +1,137 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change time table details"></app-no-privilege>
+<div *ngIf="this.timetable && privilege.update">
+  <app-page-header
+    title="Time Table Change Form of {{ timetable.code }}"
+    [breadcrumbSegments]="['Time Tables', 'Show All Time Tables', 'Change Details of ' + timetable.code]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Grade</mat-label>
+            <mat-select formControlName="grade" required>
+              <mat-option *ngFor="let grade of grades" [value]="grade.id">{{grade.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gradeField.invalid">
+              <span *ngIf="gradeField.errors.required">Grade is required</span>
+              <span *ngIf="gradeField.errors.server">{{gradeField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Grade Year</mat-label>
+            <mat-select formControlName="gradeyear" required>
+              <mat-option *ngFor="let gradeyear of gradeyears" [value]="gradeyear.id">{{gradeyear.code + '-' + gradeyear.year}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gradeyearField.invalid">
+              <span *ngIf="gradeyearField.errors.required">Grade Year is required</span>
+              <span *ngIf="gradeyearField.errors.server">{{gradeyearField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Subject</mat-label>
+            <mat-select formControlName="subject" required>
+              <mat-option *ngFor="let subject of subjects" [value]="subject.id">{{subject.code + '-' + subject.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="subjectField.invalid">
+              <span *ngIf="subjectField.errors.required">Subject is required</span>
+              <span *ngIf="subjectField.errors.server">{{subjectField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Subject Teacher</mat-label>
+            <mat-select formControlName="teacher" required>
+              <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.code + '-' + teacher.nametitle.name + ' ' + teacher.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="teacherField.invalid">
+              <span *ngIf="teacherField.errors.required">Subject Teacher is required</span>
+              <span *ngIf="teacherField.errors.server">{{teacherField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Day</mat-label>
+            <mat-select formControlName="day" required>
+              <mat-option *ngFor="let day of days" [value]="day.id">{{day.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="dayField.invalid">
+              <span *ngIf="dayField.errors.required">Day is required</span>
+              <span *ngIf="dayField.errors.server">{{dayField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Class</mat-label>
+            <mat-select formControlName="cls" required>
+              <mat-option *ngFor="let cls of clses" [value]="cls.id">{{cls.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="clsField.invalid">
+              <span *ngIf="clsField.errors.required">Class is required</span>
+              <span *ngIf="clsField.errors.server">{{clsField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Timetable Status</mat-label>
+            <mat-select formControlName="timetablestatus" required>
+              <mat-option *ngFor="let timetablestatus of timetablestatuses" [value]="timetablestatus.id">{{timetablestatus.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="timetablestatusField.invalid">
+              <span *ngIf="timetablestatusField.errors.required">Timetable Status is required</span>
+              <span *ngIf="timetablestatusField.errors.server">{{timetablestatusField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Start Time</mat-label>
+            <input type="time" matInput formControlName="tostart" required>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="tostartField.invalid">
+              <span *ngIf="tostartField.errors.required">Start Time is required</span>
+              <span *ngIf="tostartField.errors.server">{{tostartField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>End Time</mat-label>
+            <input type="time" matInput formControlName="toend" required>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="toendField.invalid">
+              <span *ngIf="toendField.errors.required">End Time is required</span>
+              <span *ngIf="toendField.errors.server">{{toendField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/timetables" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Time Tables</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

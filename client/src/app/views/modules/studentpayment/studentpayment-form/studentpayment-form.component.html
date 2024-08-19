@@ -1,0 +1,82 @@
+<app-no-privilege message="No privilege to add new student payment" *ngIf="!privilege.add"></app-no-privilege>
+<div *ngIf="privilege.add">
+  <app-page-header title="Student Payment Form" [breadcrumbSegments]="['Student Payments', 'Add New Student Payment']"></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Student</mat-label>
+            <mat-select formControlName="student" required>
+              <mat-option *ngFor="let student of students" [value]="student.id">{{student.code + '-' + student.nametitle.name + ' ' + student.callingname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="studentField.invalid">
+              <span *ngIf="studentField.errors.required">Student is required</span>
+              <span *ngIf="studentField.errors.server">{{studentField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Enrollment</mat-label>
+            <mat-select formControlName="enrollment" required>
+              <mat-option *ngFor="let enrollment of enrollments" [value]="enrollment.id">{{enrollment.code}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="enrollmentField.invalid">
+              <span *ngIf="enrollmentField.errors.required">Enrollment is required</span>
+              <span *ngIf="enrollmentField.errors.server">{{enrollmentField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Amount</mat-label>
+            <input type="number" matInput formControlName="amount" required>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="amountField.invalid">
+              <span *ngIf="amountField.errors.required">Amount is required</span>
+              <span *ngIf="amountField.errors.server">{{amountField.errors.server.join(', ')}}</span>
+              <span *ngIf="amountField.errors.min">Amount should be equal or greater than 0</span>
+              <span *ngIf="amountField.errors.max">Amount should be equal or less than 999999</span>
+              <span *ngIf="amountField.errors.pattern">Amount is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Paid Date</mat-label>
+            <input matInput [matDatepicker]="pickerdate" formControlName="date" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerdate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerdate></mat-datepicker>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="dateField.invalid">
+              <span *ngIf="dateField.errors.required">Paid Date is required</span>
+              <span *ngIf="dateField.errors.server">{{dateField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" ></textarea>
+            <mat-hint>Ex: </mat-hint>
+            <mat-error *ngIf="descriptionField.invalid">
+              <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+              <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+              <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 65535 characters. </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/studentpayments" class="ml-0" mat-flat-button color="primary"><mat-icon>list</mat-icon> All Student Payments</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="reset"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <span class="text-warning">*</span> Required Fields
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

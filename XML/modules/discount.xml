@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "../dtd/regular-module.dtd">
+<regular-module name="discount" to-string-ts="discount.code + '-' + discount.nametitle.name + ' ' + discount.callingname" to-string-java="discount.getCode() + #quat;-#quat; + discount.getNametitle.getName() + #quat; #quat; + discount.getCallingname()">
+    <code length="10" prefix="D" searchable="yes" exist-on-table="yes"/>
+
+
+    <varchar-property basic="yes" exist-on-table="yes" searchable="yes" required="yes" width="8" name="name" label="Name" example=""/>
+
+    <decimal-property name="fixedamount" label="Fixed Amount" example="" precision="10" scale="2" min="0" max="99999999"/>
+    <decimal-property name="percentage" label="Percentage" example="" precision="5" scale="2" min="0" max="100"/>
+
+
+    <reference-property basic="yes" searchable="yes" required="yes" name="discounttype" label="Discount Type" referenced-from="discounttype" service-method="getAll" to-string-java="discounttype.getName()" to-string-ts="discounttype.name"/>
+    <reference-property basic="yes" searchable="yes" required="yes" insertable="no" default-value="1" name="discountstatus" label="Discount Status" referenced-from="discountstatus" service-method="getAll" to-string-java="discountstatus.getName()" to-string-ts="discountstatus.name"/>
+
+
+    <text-property name="description" label="Description" example=""/>
+
+
+</regular-module>
+
+

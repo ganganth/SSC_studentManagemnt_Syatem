@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "../dtd/seed.dtd">
+<seed name="guardianrelationship" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="20"/>
+    </properties>
+    <values>
+        <value><data>Father</data></value>
+        <value><data>Mother</data></value>
+        <value><data>Legal Guardian</data></value>
+    </values>
+</seed>

@@ -1,0 +1,137 @@
+<app-no-privilege *ngIf="!privilege.showAll" message="No privilege to show all materials"></app-no-privilege>
+<div *ngIf="privilege.showAll">
+  <app-page-header title="Materials" [breadcrumbSegments]="['Materials', 'Show All Materials']"></app-page-header>
+  <div *ngIf="materialDataPage!==undefined">
+    <mat-card>
+      <mat-card-content>
+        <div class="mb-2" *ngIf="privilege.add">
+          <button class="mx-0" routerLink="/materials/add" mat-stroked-button><mat-icon>add</mat-icon> New Material</button>
+        </div>
+        <div class="mb-1">
+          <div class="row">
+
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Code</mat-label>
+                <input matInput [formControl]="codeField" (keyup)="loadData()">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Material Title</mat-label>
+                <input matInput [formControl]="nameField" (keyup)="loadData()">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Subject</mat-label>
+                <mat-select [formControl]="subjectField" (ngModelChange)="loadData()">
+                  <mat-option [value]="null" selected >Any Subject</mat-option>
+                  <mat-option *ngFor="let subject of subjects" [value]="subject.id">{{subject.code + '-' + subject.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Lesson</mat-label>
+                <mat-select [formControl]="lessonField" (ngModelChange)="loadData()">
+                  <mat-option [value]="null" selected >Any Lesson</mat-option>
+                  <mat-option *ngFor="let lesson of lessons" [value]="lesson.id">{{lesson.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Material Medium</mat-label>
+                <mat-select [formControl]="materialmediumField" (ngModelChange)="loadData()">
+                  <mat-option [value]="null" selected >Any Material Medium</mat-option>
+                  <mat-option *ngFor="let materialmedium of materialmediums" [value]="materialmedium.id">{{materialmedium.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Material Status</mat-label>
+                <mat-select [formControl]="materialstatusField" (ngModelChange)="loadData()">
+                  <mat-option [value]="null" selected >Any Material Status</mat-option>
+                  <mat-option *ngFor="let materialstatus of materialstatuses" [value]="materialstatus.id">{{materialstatus.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" *ngIf="materialDataPage.totalElements > 0">
+          <table mat-table [dataSource]="materialDataPage.content" class="w-100">
+
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef>Code</th>
+              <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Material Title</th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="subject">
+              <th mat-header-cell *matHeaderCellDef>Subject</th>
+              <td mat-cell *matCellDef="let element"> {{element.subject.code + '-' + element.subject.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lesson">
+              <th mat-header-cell *matHeaderCellDef>Lesson</th>
+              <td mat-cell *matCellDef="let element"> {{element.lesson.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="materialmedium">
+              <th mat-header-cell *matHeaderCellDef>Material Medium</th>
+              <td mat-cell *matCellDef="let element"> {{element.materialmedium.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="materialstatus">
+              <th mat-header-cell *matHeaderCellDef>Material Status</th>
+              <td mat-cell *matCellDef="let element"> {{element.materialstatus.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="more-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button routerLink="/materials/{{element.id}}" class="mat-btn-sm" mat-stroked-button><mat-icon>visibility</mat-icon> More ...</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button (click)="delete(element)" class="mat-btn-sm" mat-flat-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="update-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button routerLink="/materials/edit/{{element.id}}" class="mat-btn-sm" mat-flat-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <app-empty-data-table message="No materials to show" *ngIf="materialDataPage.totalElements === 0"></app-empty-data-table>
+        <div class="mt-1">
+          <mat-paginator
+            [length]="materialDataPage.totalElements"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 50, 100]"
+            (page)="paginate($event)"
+            [showFirstLastButtons]="true"
+          >
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
